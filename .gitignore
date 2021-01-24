@@ -1,0 +1,6 @@
+.idea
+venv
+build
+__pycache__
+chromedriver
+*.py[oc]
