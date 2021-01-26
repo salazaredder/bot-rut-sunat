@@ -1,1 +1,1 @@
-worker: gunicorn app:app --max-requests 10 --log-file -
+web: gunicorn app:app --max-requests 10 --log-file -
