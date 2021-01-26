@@ -110,10 +110,11 @@ chrome.webRequest.onAuthRequired.addListener(
 
 def get_chrome_driver(proxy=False, user_agent=None, bot_name='bot_develop'):
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--disable-dev-shm-usage")
-    # chrome_options.add_argument("--no-sandbox")
-    # chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN", '/usr/bin/google-chrome')
     if user_agent:
         chrome_options.add_argument(f'user-agent={user_agent}')
     if proxy:
@@ -124,7 +125,8 @@ def get_chrome_driver(proxy=False, user_agent=None, bot_name='bot_develop'):
             zp.writestr("manifest.json", manifest_json)
             zp.writestr("background.js", get_background_js(proxy))
         chrome_options.add_extension(plugin_file)
-    driver = webdriver.Chrome(executable_path='chromedriver/chromedriver', options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get('CHROMEDRIVER_PATH', 'chromedriver/chromedriver'),
+                              options=chrome_options)
     return driver
 
 
